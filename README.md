@@ -44,8 +44,11 @@ or
 sudo python -m pythonji 🪵.🐍
 ```
 
-Once the keylogger is running, it will capture keystrokes in the background. Press the 'Esc' key to exit and save the keystroke history to the hard disk.
+Once the keylogger is running, it will capture keystrokes in the background. Press the 'Esc' key to exit and save the keystroke history to the hard disk.  
 
+__Note__: The tool starts sending the captured keystrokes when the maximum IRC message length has been reached which is in case of the default channel name 487.
+
+![image](https://github.com/stenocyb/EmojiLogger/assets/7761846/92764cc8-0d24-4e72-aeff-cc4de9456c47)
 
 ## Contributing
 Contributions are welcome! Feel free to open an issue or submit a pull request.
