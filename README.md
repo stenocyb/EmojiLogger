@@ -1,6 +1,6 @@
 # EmojiLogger 🪵.🐍
 
-EmojiLogger is an educational keylogger written in Python, making use of the Pythonji module to incorporate emojis within the code base. This keylogger operates discreetly in the background, capturing keystrokes and transmitting them to an IRC server. Moreover, it terminates itself when the user presses the 'Esc' key, ensuring user control over its activity. Upon exit, EmojiLogger saves the complete history of captured keystrokes to the file system for further analysis.
+EmojiLogger is an educational keylogger written in Python, making use of the [Pythonji](https://github.com/gahjelle/pythonji) module to incorporate emojis within the code base. This keylogger operates discreetly in the background, capturing keystrokes and transmitting them to an IRC server. Moreover, it terminates itself when the user presses the 'Esc' key, ensuring user control over its activity. Upon exit, EmojiLogger saves the complete history of captured keystrokes to the file system for further analysis.
 
 ## Features
 
